@@ -1,29 +1,38 @@
 //your code here
+// Script.js
 
-let images = document.querySelectorAll(".image");
+let draggedImage = null;
 
-let c = 1;
-images.forEach(img => {
-    img.id = "div"+c
-    c++
-    img.addEventListener("dragstart", dragStart)
-    img.addEventListener("dragover", dragOver)
-    img.addEventListener("drop", drop)
+document.addEventListener('dragstart', function (e) {
+  if (e.target.tagName === 'IMG') {
+    draggedImage = e.target; // Store the dragged image
+    setTimeout(() => e.target.classList.add('hidden'), 0); // Optional: make image invisible while dragging
+  }
 });
 
+document.addEventListener('dragend', function (e) {
+  if (e.target.tagName === 'IMG') {
+    e.target.classList.remove('hidden'); // Restore image visibility
+  }
+});
 
-function dragStart(e) {
-    e.dataTransfer.setData("text", e.target.id);
-}
-function dragOver(e) {
-    e.preventDefault()
-}
+document.querySelectorAll('.flex div').forEach(div => {
+  div.addEventListener('dragover', function (e) {
+    e.preventDefault(); // Necessary to allow the drop
+  });
 
-function drop(e) {
+  div.addEventListener('drop', function (e) {
     e.preventDefault();
-    var data = e.dataTransfer.getData("text");
+    const targetDiv = this;
+
+    // Ensure there's an image to swap with
+    const targetImage = targetDiv.querySelector('img');
     
-    let temp = e.target.id;
-    e.target.id = data;
-    document.getElementById(data).id = temp;
-}
+    if (draggedImage && targetImage) {
+      // Swap the images by swapping their `src` attributes
+      const tempSrc = draggedImage.src;
+      draggedImage.src = targetImage.src;
+      targetImage.src = tempSrc;
+    }
+  });
+});
