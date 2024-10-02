@@ -1,4 +1,4 @@
-#div1 {
+/* #div1 {
   background-image: url("https://picsum.photos/id/237/200/300");
   height: 300px;
   width: 200px;
@@ -38,7 +38,7 @@
   height: 300px;
   width: 200px;
   margin: 20px;
-}
+} */
 
 div.container {
   border: 5px solid #555;
@@ -48,6 +48,7 @@ div.container {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 .selected {
